@@ -24,23 +24,23 @@ total_scripts=0
 for script in solutions/*.sh; do
     [ -f "$script" ] || continue
     total_scripts=$((total_scripts + 1))
-    
+
     # 多种方式查找版本号
     version=""
-    
+
     # 方式1: 查找 vX.X.X 格式
     version=$(grep -o "v[0-9]\.[0-9]\.[0-9]" "$script" | head -1)
-    
+
     # 方式2: 查找 # 版本: 格式
     if [ -z "$version" ]; then
         version=$(grep -i "# 版本:" "$script" | grep -o "v[0-9]\.[0-9]\.[0-9]" | head -1)
     fi
-    
+
     # 方式3: 查找 # 版本 v 格式
     if [ -z "$version" ]; then
         version=$(grep -i "# 版本 v" "$script" | grep -o "v[0-9]\.[0-9]\.[0-9]" | head -1)
     fi
-    
+
     if [ "$version" = "v1.0.1" ]; then
         echo "  ✅ $(basename $script): $version"
         matched_scripts=$((matched_scripts + 1))
@@ -52,23 +52,25 @@ for script in solutions/*.sh; do
 done
 
 # 检查公共库
+echo -e "\n📦 公共库检查:"
 if [ -d "lib" ]; then
-    echo "  公共库文件: $lib_count 个"
-    
-    # 检查公共库版本
-    fi
-else
+    lib_count=$(find lib -name "*.sh" -type f 2>/dev/null | wc -l)
+    echo "  ✅ lib/ 目录存在 ($lib_count 个库文件)"
+    echo "  ℹ️  没有 lib/ 目录"
 fi
 
 # 检查脚本是否使用公共库
 echo -e "\n🔗 公共库使用情况:"
 scripts_with_lib=0
+total_scripts_all=0
 for script in solutions/*.sh tools/*.sh; do
     [ -f "$script" ] || continue
+    total_scripts_all=$((total_scripts_all + 1))
+    if grep -q "source.*lib/" "$script" 2>/dev/null; then
         scripts_with_lib=$((scripts_with_lib + 1))
     fi
 done
-total_scripts_all=$(ls solutions/*.sh tools/*.sh 2>/dev/null | wc -l)
+echo "  使用公共库的脚本: $scripts_with_lib/$total_scripts_all"
 
 # 功能测试
 echo -e "\n🧪 功能测试:"
@@ -93,27 +95,5 @@ echo "📋 结果摘要:"
 echo "  项目版本: v1.0.1"
 echo "  解决方案脚本: $total_scripts 个"
 echo "  版本匹配: $matched_scripts/$total_scripts"
-
-# 详细检查
-echo -e "\n🔍 详细版本检查:"
-echo "1. 查看 VERSION 文件:"
-if [ -f "VERSION" ]; then
-    head -8 VERSION
-fi
-
-echo -e "\n2. 关键脚本版本检查:"
-for script in solutions/sing-box.sh solutions/sba.sh solutions/argox.sh; do
-    if [ -f "$script" ]; then
-        echo -n "  $(basename $script): "
-        grep -o "v[0-9]\.[0-9]\.[0-9]" "$script" | head -1 || echo "未找到"
-    fi
-done
-
-echo -e "\n3. 公共库状态:"
-if [ -d "lib" ]; then
-    echo "  包含文件:"
-        echo "    $file"
-    done
-fi
 
 echo -e "\n✅ 验证完成"
