@@ -1,0 +1,26 @@
+# sysadmin-scripts 项目配置
+PROJECT_NAME="sysadmin-scripts"
+VERSION="v1.0.1"
+AUTHOR="cat@jie"
+REPOSITORY="sysadmin-scripts"
+
+# 目录配置
+DIR_SOLUTIONS="solutions"
+DIR_TOOLS="tools"
+DIR_LIB="lib"
+DIR_TESTS="tests"
+DIR_DOCS="docs"
+DIR_CONFIGS="configs"
+DIR_BACKUPS="backups"
+
+# 构建配置
+BUILD_OUTPUT="dist"
+BACKUP_RETENTION_DAYS=7
+
+# 测试配置
+TEST_TIMEOUT=30
+TEST_VERBOSE=false
+
+# 部署配置
+DEPLOY_TARGET="production"
+DEPLOY_USER="admin"

@@ -1,0 +1,27 @@
+# 备份文件
+*.backup*
+*.bak
+*.before_update
+*.old
+
+# 临时文件
+*.swp
+*~
+*.tmp
+*.temp
+
+# 日志
+*.log
+logs/
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# 构建产物
+build/
+dist/
+*.o
+
+# 文档生成
+FINAL_STRUCTURE.txt

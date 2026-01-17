@@ -1,0 +1,13 @@
+v1.0.1 最终版本
+
+主要变更:
+- 精简项目结构，移除冗余文件
+- 保留3个完整的代理解决方案
+- 统一的工具集和管理脚本
+- 独立的脚本架构，无公共库依赖
+
+核心文件:
+- solutions/hysteria2.sh
+- solutions/sing-box-four-in-one.sh  
+- solutions/sing-box.sh
+- proxy.sh (统一管理器)
